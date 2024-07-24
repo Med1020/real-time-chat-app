@@ -1,4 +1,4 @@
-import { classname } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 import React, { ButtonHTMLAttributes, FC } from "react";
@@ -54,7 +54,7 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={classname(buttonVariants({ intent, size, className }))}
+      className={cn(buttonVariants({ intent, size, className }))}
       disabled={isLoading}
       {...rest}
     >
