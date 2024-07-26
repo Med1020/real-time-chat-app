@@ -5,9 +5,7 @@ import { signIn } from "next-auth/react";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 
-interface pageProps {}
-
-const Login: FC<pageProps> = () => {
+const Login: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const loginWithGoogle = async () => {

@@ -5,6 +5,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { nanoid } from "nanoid";
 import { Message, messageValidator } from "@/lib/validations/message";
+import { pusherServer } from "@/lib/pusher";
+import { toPusherKey } from "@/lib/utils";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -45,8 +47,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       timeStamp,
     };
 
-    console.log(messageData);
     const message = messageValidator.parse(messageData);
+
+    //notify all chatroom clients
+    pusherServer.trigger(
+      toPusherKey(`chat:${chatId}`),
+      "incoming-message",
+      message
+    );
+
+    pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), "new_message", {
+      ...message,
+      senderImg: sender.image,
+      senderName: sender.name,
+    });
+
     //all checked, send the message
     await db.zadd(`chat:${chatId}:messages`, {
       score: timeStamp,
