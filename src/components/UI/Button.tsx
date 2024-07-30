@@ -3,7 +3,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 import React, { ButtonHTMLAttributes, FC } from "react";
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   [
     "active:scale-95 inline-flex",
     "items-center",
